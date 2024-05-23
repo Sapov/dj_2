@@ -1,0 +1,40 @@
+{% extends 'files/base.html' %}
+
+
+{% block content %}
+<title>{{title}}</title>
+<h1>{{title}}</h1>
+
+<table class="table-bordered table table-striped table-hover">
+    <thead>
+    <tr>
+        <th scope="col">Материал</th>
+        <th scope="col">Кол-во</th>
+        <th scope="col">Размер</th>
+        <th scope="col">Обработка:</th>
+        <th scope="col">Цена:</th>
+        <th scope="col">Дата:</th>
+    </tr>
+    </thead>
+
+
+{% for item in items %}
+
+    <tbody>
+    <tr>
+        <td>{{ item.material }}</td>
+        <td>{{ item.quantity }}</td>
+        <td> {{ item.width }} х {{ item.length }}</td>
+        <td> {{ item.FinishWork }}</td>
+        <td> {{ item.results }} руб.</td>
+        <td> {{ item.created_at }}</td>
+    </tr>
+
+    {% endfor %}
+
+
+    </tbody>
+</table>
+
+
+{% endblock %}

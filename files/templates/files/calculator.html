@@ -1,0 +1,31 @@
+{% extends 'files/base.html' %}
+{% load crispy_forms_tags %}
+
+
+
+{% block content %}
+<title>{{title}}</title>
+<h1>{{title}}</h1>
+
+
+ <div class="row">
+    <div class="col-8">
+
+<form action="{% url 'calculator' %}" method="post">
+{% csrf_token %}
+  {{ form|crispy }}
+<button type="submit" class="btn btn-primary">Рассчитать</button>
+</form>
+
+<h5>Сумма заказа: {{results}} руб.</h5>
+<div > {{form.non_field_errors }}</div>
+    </div>
+    <div class="col-4">
+
+<h2>Сумма заказа: {{results}} руб.</h2>
+
+    </div>
+  </div>
+
+
+{% endblock %}html>
