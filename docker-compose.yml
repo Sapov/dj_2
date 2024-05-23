@@ -1,0 +1,38 @@
+version: '3.9'
+
+services:
+  django_project:
+    build:
+      dockerfile: Dockerfile
+      context: ../../Downloads/Banner-master/Banner-master
+    image: django_docker:latest
+    container_name: django_banner_docker
+    volumes:
+      - static_volume:/django/static
+      - media_volume:/django/media
+    env_file:
+      - .env
+    command: >
+      bash -c "./manage.py collectstatic --noinput && ./manage.py migrate  && ./manage.py add_price && gunicorn -b 0.0.0.0:8000 mysite.wsgi:application"
+
+    restart: always
+
+  nginx:
+    build:
+      dockerfile: ../../Downloads/Banner-master/Banner-master/docker/nginx/Dockerfile
+      context: ../../Downloads/Banner-master/Banner-master/docker/nginx
+    container_name: nginx_for_django
+    image: nginx_for_django
+    volumes:
+      - static_volume:/django/static
+      - media_volume:/django/media
+    depends_on:
+      - django_project
+    ports:
+      - "${NGINX_EXTERNAL_PORT}:80"
+    restart: always
+
+
+volumes:
+  static_volume:
+  media_volume:
