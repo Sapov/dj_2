@@ -31,4 +31,7 @@ jobs:
         pip install -r requirements.txt
     - name: Run Tests
       run: |
+        echo "SECRET_KEY = 'django-insecure-dummy-secret'" > .env
+        echo DB_ENGINE=${{ secrets.DB_ENGINE }} > .env
+
         python manage.py test
